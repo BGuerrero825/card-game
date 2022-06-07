@@ -1,3 +1,24 @@
-[gd_scene format=2]
+[gd_scene load_steps=4 format=2]
 
-[node name="Node2D" type="Node2D"]
+[ext_resource path="res://Card.tscn" type="PackedScene" id=1]
+[ext_resource path="res://art/table.png" type="Texture" id=2]
+[ext_resource path="res://Player.tscn" type="PackedScene" id=3]
+
+[node name="Table" type="Node2D"]
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+centered = false
+region_enabled = true
+region_rect = Rect2( 0, 0, 384, 216 )
+
+[node name="Card" parent="." instance=ExtResource( 1 )]
+position = Vector2( 252.263, 39.0649 )
+type = "ht"
+
+[node name="Card2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 136.794, 30.614 )
+type = "s1"
+
+[node name="Player" parent="." instance=ExtResource( 3 )]
+position = Vector2( 192.233, 174.979 )

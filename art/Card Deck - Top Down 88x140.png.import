@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/icon.png-487276ed1e3a0c39cad0279d744ee560.stex"
+path="res://.import/Card Deck - Top Down 88x140.png-4a9c99369458c1908ffe256e3549a16a.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://icon.png"
-dest_files=[ "res://.import/icon.png-487276ed1e3a0c39cad0279d744ee560.stex" ]
+source_file="res://art/Card Deck - Top Down 88x140.png"
+dest_files=[ "res://.import/Card Deck - Top Down 88x140.png-4a9c99369458c1908ffe256e3549a16a.stex" ]
 
 [params]
 
