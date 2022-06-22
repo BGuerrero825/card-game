@@ -6,7 +6,7 @@
 
 [node name="Table" type="Node2D"]
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="Background" type="Sprite" parent="."]
 texture = ExtResource( 2 )
 centered = false
 region_enabled = true
@@ -21,4 +21,4 @@ position = Vector2( 136.794, 30.614 )
 type = "s1"
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
-position = Vector2( 192.233, 174.979 )
+position = Vector2( 192.608, 182.845 )

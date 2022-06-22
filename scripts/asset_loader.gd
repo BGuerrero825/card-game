@@ -1,6 +1,6 @@
 extends Node
 
-var deck = load("res://art/Deck.png")
+const CARD = preload("res://Card.tscn")
 
 # Declare member variables here. Examples:
 # var a = 2

@@ -1,7 +1,8 @@
 extends Node2D
 
-# 2 digits: (h|c|d|s) + (2-9|t|j|q|k|a) | (b1|b2|j1|j2)
+# 2 digits: ( (h|c|d|s) + (2-9|t|j|q|k|a) ) | (b1|b2|j1|j2)
 export var type := "b1"
+
 var hovered := false
 var index := -1
 signal clicked(type)
@@ -44,8 +45,8 @@ func set_type(type):
 	
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+#func _process(delta):
+#	pass
 
 func flip_down():
 	pass
@@ -54,14 +55,14 @@ func flip_up():
 	pass
 
 #enlarge and align Sprite 
-func select():
+func focus():
 	$Sprite.scale = Vector2(1.4,1.4)
 	$Sprite.z_index = 1
 	$Sprite.position.y = -30
 	$Sprite.rotation_degrees = -rotation_degrees
 	
 #return Sprite to original transform
-func deselect():
+func unfocus():
 	$Sprite.scale = Vector2(1.0,1.0)
 	$Sprite.z_index = 0
 	$Sprite.position.y = 0

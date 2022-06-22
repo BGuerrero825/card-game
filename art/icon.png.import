@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Spades - Top Down 88x124.png-3192d0e69fcb5810901665240fc81ff6.stex"
+path="res://.import/icon.png-c3d958876317c5b9ff9d73fef1b6123f.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/Spades - Top Down 88x124.png"
-dest_files=[ "res://.import/Spades - Top Down 88x124.png-3192d0e69fcb5810901665240fc81ff6.stex" ]
+source_file="res://art/icon.png"
+dest_files=[ "res://.import/icon.png-c3d958876317c5b9ff9d73fef1b6123f.stex" ]
 
 [params]
 
