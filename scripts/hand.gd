@@ -2,25 +2,12 @@ extends Node2D
 
 # hand spacing and initialization variables
 var cards = []
-var hand_width
-var rot_range
-var hand_height
 var hand_size := 5
 var focused = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	# initialize hand with "hand_size" cards
-	for i in range(0, hand_size):
-		var new_card = AssetLoader.CARD.instance()
-		cards.append(new_card)
-		self.add_child(new_card)
-		new_card.index = i
-		new_card.set_type("j1")
-		new_card.connect("hovered", self, "on_Card_hovered")
-		new_card.connect("unhovered", self, "on_Card_unhovered")
-	
-	position_cards()
+	pass
 	
 func _process(delta):
 	pass
@@ -30,9 +17,9 @@ func get_focused_card():
 
 func position_cards():
 	#scale offset ranges logarithmically with hand size
-	hand_width = 60 * log(cards.size())
-	hand_height = 4 * log(cards.size())
-	rot_range = 30 * log(cards.size())
+	var hand_width = 60 * log(cards.size())
+	var hand_height = 4 * log(cards.size())
+	var rot_range = 30 * log(cards.size())
 	# if hand is one card, set transform to zero
 	if cards.size() == 1:
 		cards[0].position = Vector2(0,0)
@@ -43,6 +30,14 @@ func position_cards():
 			cards[i].position.x = (-hand_width / 2) + ((hand_width / (cards.size()-1)) * i)
 			cards[i].position.y =  pow((hand_height/2) - ((hand_height / (cards.size()-1)) * i),2)
 			cards[i].rotation_degrees = (-rot_range / 2) + ((rot_range / (cards.size()-1)) * i)
+
+# add card to the end of the hand and attach signals
+func receive_card(card):
+	cards.append(card)
+	self.add_child(card)
+	card.connect("hovered", self, "on_Card_hovered")
+	card.connect("unhovered", self, "on_Card_unhovered")
+	position_cards()
 
 func remove_card(index):
 	#remove card from hand and scene
@@ -56,7 +51,8 @@ func remove_card(index):
 	position_cards()
 
 # focus on the highest index card that is being hovered over
-func on_Card_hovered(index):
+func on_Card_hovered(id):
+	var index = find_index(id)
 	#if none focused, select index
 	if focused == null:
 		cards[index].focus()
@@ -69,7 +65,8 @@ func on_Card_hovered(index):
 	#if hovering a lower (or same) index card, nothing
 
 # unfocus if unhovered and focus a new card if also hovered
-func on_Card_unhovered(index):
+func on_Card_unhovered(id):
+	var index = find_index(id)
 	#if unhovering a lower index card, nothing
 	#if unhovering the focused card
 	if index == focused:
@@ -83,3 +80,8 @@ func on_Card_unhovered(index):
 		if next_hover != null:
 			cards[next_hover].focus()
 			focused = next_hover
+
+func find_index(id):
+	for i in range(0, cards.size()):
+		if cards[i].id == id:
+			return i
