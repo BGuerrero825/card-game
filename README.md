@@ -1,15 +1,15 @@
-## Cards
+# Cards
 
 "Cards" is a 2D framework project for building out generic card games in the Godot engine. This project focuses on **multiplayer networked games** using peer-to-peer client-host sessions. 
 
-# Table
+## Table[^1]
 - Session creation
 - Dealing cards
 - Managing decks
 
-# Player
+## Player
 
-# Card[^1]
+## Card
 
  ```
  This is a box
