@@ -1,6 +1,6 @@
 extends Node2D
 
-
+var active_turn := true
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -18,11 +18,15 @@ func _process(delta):
 	
 # flow control of inputs made by human controlling this player
 func input_handling():
+	if not active_turn:
+		return
+	# on left click, thumb press
 	if Input.is_action_just_pressed("left_click"):
 		$Thumb/Sprite.frame = 1
 		# if a card in the hand is focused (hovered), add it to thumb and remove from hand
 		if $Hand.focused != null:
 			hand_to_thumb()
+		# else if hand is... (TODO)
 	if Input.is_action_just_released("left_click"):
 		$Thumb/Sprite.frame = 0
 		# if a card in the thumb, drop it
@@ -30,12 +34,11 @@ func input_handling():
 			$Thumb.drop_card()
 
 func hand_to_thumb():
-	var card = $Hand.get_focused_card()
+	var card = $Hand.pull_focused_card()
 	$Thumb.grab_card(card)
-	$Hand.remove_card(card.index)
 	
 func receive_card(card, from):
-	#should check to see if thumb is requesting, else goes to hand
+	# should check to see if thumb is requesting, else goes to hand
 	
 	# to hand
 	$Hand.receive_card(card)

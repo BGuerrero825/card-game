@@ -19,6 +19,7 @@ func set_value(src_id, src_val):
 	value = src_val
 	$Sprite.frame = src_val
 
+#might be old code, prep to remove
 func set_type(type):
 	#if an improper type given, default to background 2
 	if type.length() < 2:

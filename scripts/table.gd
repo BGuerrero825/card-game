@@ -7,21 +7,20 @@ var players := []
 func _ready():
 	yield(get_tree().root, "ready")
 	players.append(get_node("Player"))
-	deal_cards(players, hand_size)
+	deal_cards(hand_size)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
 
-func deal_cards(players, num_cards):
+func deal_cards(num_cards):
 	if !$Deck:
 		print("No deck exists to deal cards from.")
 		return
 	# spawn in cards from the deck to players in round robin order
 	for i in range(0, num_cards):
 		for j in range(0, players.size()):
-			print(players)
-			draw_card(players[0], $Deck)
+			draw_card(players[j], $Deck)
 			
 func draw_card(to, from):
 	var card = from.remove_card()
