@@ -1,19 +1,25 @@
 extends Node2D
 
+var id := -1
+var value := -1
 # 2 digits: ( (h|c|d|s) + (2-9|t|j|q|k|a) ) | (b1|b2|j1|j2)
 export var type := "b1"
-
 var hovered := false
-var index := -1
-signal clicked(type)
-signal hovered(index)
-signal unhovered(index)
+signal hovered(id)
+signal unhovered(id)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	set_type(type)
+	# set_type(type)
 	# flip_up()
+	pass
+	
+func set_value(src_id, src_val):
+	id = src_id
+	value = src_val
+	$Sprite.frame = src_val
 
+#might be old code, prep to remove
 func set_type(type):
 	#if an improper type given, default to background 2
 	if type.length() < 2:
@@ -70,8 +76,8 @@ func unfocus():
 
 func _on_Area2D_mouse_entered():
 	hovered = true
-	emit_signal("hovered", index)
+	emit_signal("hovered", id)
 	
 func _on_Area2D_mouse_exited():
 	hovered = false
-	emit_signal("unhovered", index)
+	emit_signal("unhovered", id)
