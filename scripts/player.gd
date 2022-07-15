@@ -1,10 +1,8 @@
 extends Node2D
 
 var active_turn := true
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
+var hover := []
+var hand_hover := []
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -34,11 +32,32 @@ func input_handling():
 			$Thumb.drop_card()
 
 func hand_to_thumb():
-	var card = $Hand.pull_focused_card()
-	$Thumb.grab_card(card)
+	var card = $Hand.send_focused_card()
+	$Thumb.receive_card(card)
 	
 func receive_card(card, from):
 	# should check to see if thumb is requesting, else goes to hand
-	
+	###
 	# to hand
 	$Hand.receive_card(card)
+
+func _on_Thumb_hovered(object):
+	if object.get_parent() == $Hand:
+		hand_hover.append(object)
+		print("hand: ", hand_hover)
+		$Hand.focus_hover(hand_hover)
+	else:
+		hover.append(object)
+		print("objects: ", hover)
+
+func _on_Thumb_unhovered(object):
+	if object.get_parent() == $Hand:
+		hand_hover.erase(object)
+		print("hand: ", hand_hover)
+		$Hand.focus_hover(hand_hover)
+		# if cards still hovered, hover next card
+		if hand_hover:
+			pass
+	else:
+		hover.erase(object)
+		print("objects: ", hover)

@@ -73,11 +73,11 @@ func unfocus():
 	$Sprite.z_index = 0
 	$Sprite.position.y = 0
 	$Sprite.rotation_degrees = 0
-
-func _on_Area2D_mouse_entered():
-	hovered = true
-	emit_signal("hovered", id)
-	
-func _on_Area2D_mouse_exited():
-	hovered = false
-	emit_signal("unhovered", id)
+#
+#func _on_Area2D_mouse_entered():
+#	hovered = true
+#	emit_signal("hovered", id)
+#
+#func _on_Area2D_mouse_exited():
+#	hovered = false
+#	emit_signal("unhovered", id)

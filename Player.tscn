@@ -19,3 +19,6 @@ script = ExtResource( 1 )
 shape = SubResource( 1 )
 
 [node name="Thumb" parent="." instance=ExtResource( 2 )]
+
+[connection signal="hovered" from="Thumb" to="." method="_on_Thumb_hovered"]
+[connection signal="unhovered" from="Thumb" to="." method="_on_Thumb_unhovered"]

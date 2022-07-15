@@ -20,9 +20,9 @@ func deal_cards(num_cards):
 	# spawn in cards from the deck to players in round robin order
 	for i in range(0, num_cards):
 		for j in range(0, players.size()):
-			draw_card(players[j], $Deck)
+			deal_card(players[j], $Deck)
 			
-func draw_card(to, from):
+func deal_card(to, from):
 	var card = from.remove_card()
 	to.receive_card(card, from)
 	
