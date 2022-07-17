@@ -18,10 +18,6 @@ config/name="Cards"
 run/main_scene="res://Tabletop.tscn"
 config/icon="res://art/icon.png"
 
-[autoload]
-
-AssetLoader="*res://scripts/asset_loader.gd"
-
 [display]
 
 window/size/width=512

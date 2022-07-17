@@ -11,18 +11,20 @@ func _ready():
 #func _process(delta):
 	#pass
 
-# add card to the end of the hand and attach signals
-func receive_card(card):
-	cards.append(card)
-	self.add_child(card)
+# add card to hand to a specified index, or end of hand
+func receive_card(card, index = null):
+	if index != null:
+		cards.insert(index+1, card)
+	else:
+		cards.append(card)
+	add_child(card)
 	position_cards()
 
-# return and disconnect currently focused card
+# return and remove currently focused card
 func send_focused_card():
 	var card = cards[focused]
 	# remove card from hand
-	cards[focused].unfocus()
-	focused = null
+	set_focus()
 	cards.erase(card)
 	remove_child(card)
 	#reposition cards 
@@ -30,19 +32,35 @@ func send_focused_card():
 	return card
 
 # set focus on highest index hovered card
-func focus_hover(hover):
-	var highest_index = -1
+func determine_focus(hover):
+	var highest_index = null
 	for card in hover:
 		var index = cards.find(card)
-		if index > highest_index:
+		if highest_index == null or index > highest_index:
 			highest_index = index
-	if focused != null and focused != highest_index:
-		cards[focused].unfocus()
-	if highest_index >= 0:
-		focused = highest_index
-		cards[focused].focus()
+	set_focus(highest_index)
 		
 # ------------------------------- HELPERS ------------------------------- #
+
+func set_focus(index = null):
+	# unfocus previous focused
+	if focused != null:
+		var sprite = cards[focused].get_node("Sprite")
+		sprite.scale = Vector2(1.0,1.0)
+		sprite.z_index = 0
+		sprite.position.y = 0
+		sprite.rotation_degrees = 0
+		focused = null
+	# set new focus
+	if index != null:
+		focused = index
+		var sprite = cards[index].get_node("Sprite")
+		sprite.scale = Vector2(1.4,1.4)
+		sprite.z_index = 1
+		sprite.position.y = -30
+		# comment out next line for card tilt on focus
+		sprite.rotation_degrees = -cards[index].rotation_degrees
+
 
 # aligns cards in hand based on amount
 func position_cards():
@@ -58,38 +76,6 @@ func position_cards():
 	elif(cards.size() > 1):
 		for i in range(0,cards.size()):
 			cards[i].position.x = (-hand_width / 2) + ((hand_width / (cards.size()-1)) * i)
-			cards[i].position.y =  pow((hand_height/2) - ((hand_height / (cards.size()-1)) * i),2)
+			cards[i].position.y =  pow((hand_height / 2) - ((hand_height / (cards.size()-1)) * i),2)
 			cards[i].rotation_degrees = (-rot_range / 2) + ((rot_range / (cards.size()-1)) * i)
-
-# OLD CODE DELETE EVENTUALLY WHEN CURRENT IMPLEMENTATION IS GOOOOOD
-
-# focus on the highest index card that is being hovered over
-func on_Card_hovered(card):
-	var index = cards.find(card)
-	#if none focused, select index
-	if focused == null:
-		cards[index].focus()
-		focused = index
-	#if hovering a higher index card,  deselect old one, select index
-	elif index > focused:
-		cards[focused].unfocus()
-		cards[index].focus()
-		focused = index
-	#if hovering a lower (or same) index card, nothing
-
-# unfocus if unhovered and focus a new card if also hovered
-func on_Card_unhovered(card):
-	var index = cards.find(card)
-	#if unhovering a lower index card than selected, nothing
-	#if unhovering the focused card
-	if index == focused:
-		cards[focused].unfocus()
-		var next_hover = null
-		# check for hover on lower index cards, select highest
-		for i in range(0,focused):
-			if cards[i].hovered == true:
-				next_hover = i
-		focused = null
-		if next_hover != null:
-			cards[next_hover].focus()
-			focused = next_hover
+			move_child(cards[i], i+1)
