@@ -5,15 +5,12 @@ var hover := []
 var hand_hover := []
 var token_update_request := false
 var frame = 0
-var action_cooldown = Timer.new()
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# make mouse invisible
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
-	action_cooldown.connect("timeout",self,"_on_action_cooldown_timeout") 
-	add_child(action_cooldown)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -31,7 +28,7 @@ func input_handling():
 		if $Hand.focused != null:
 			hand_to_token()
 	# on left click release, Token unpress
-	if Input.is_action_just_released("left_click"):
+	elif Input.is_action_just_released("left_click"):
 		# if a card in the Token, drop it
 		if $Token.held_card:
 			var card = $Token.drop_card()
@@ -43,11 +40,7 @@ func input_handling():
 					$Hand.receive_card(card, index)
 				else:
 					$Hand.receive_card(card)
-			# wait to reactivate the player 
-			action_cooldown.set_wait_time(0.2)
-			action_cooldown.start()
-		else:
-			$Token.set_idle(true)
+		$Token.set_idle(true)
 
 func hand_to_token():
 	var card = $Hand.send_focused_card()
@@ -73,11 +66,7 @@ func update_hover():
 		$Hand.determine_focus(hand_hover)
 	print("Hand hovers: ", hand_hover)
 	print("Object hovers: ", hover)
-	
-	
-func _on_action_cooldown_timeout():
-	$Token.set_idle(true)
-		
+
 		
 #func _on_Token_hovered(object):
 #	if object.get_parent() == $Hand:
