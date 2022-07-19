@@ -59,7 +59,7 @@ func shuffle_deck():
 	deck.shuffle()
 
 # initializes and provides card to proper player
-func remove_card():
+func send_card():
 	# initialize a generic card
 	var card = CARD.instance()
 	# grab top card from deck's info and return to caller

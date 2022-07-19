@@ -20,5 +20,9 @@ position = Vector2( 0, 5 )
 shape = SubResource( 1 )
 
 [node name="Token" parent="." instance=ExtResource( 2 )]
+position = Vector2( 0, -50 )
 
-[connection signal="update_hover" from="Token" to="." method="update_hover"]
+[node name="Requests" type="Node2D" parent="."]
+visible = false
+[connection signal="hovered" from="Token" to="." method="_on_Token_hovered"]
+[connection signal="unhovered" from="Token" to="." method="_on_Token_unhovered"]
