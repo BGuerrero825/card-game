@@ -38,7 +38,7 @@ func token_press():
 
 # all actions originated from the release of the player token
 func token_release():
-	# if a card in the Token, remove and return it
+	# if a card in the Token, remove it then move it based to a recipient
 	if $Token.held_card:
 		var card = $Token.drop_card()
 		# if hovering over the player's hand
@@ -50,15 +50,18 @@ func token_release():
 			# else place it at the end
 			else:
 				$Hand.receive_card(card)
-		# if token hovering over any area that isnt the player hand TODO
-		elif hover:
-			pass
-		# if token hovering over nothing, send to requests to wait to be added to table
+		# if token not hovering anything controlled by the player
 		else:
 			emit_signal("send_request", card)
 			$Requests.add_child(card)
-			pass
-			
+			# if hovering any other object
+			if hover:
+				pass
+			# if hovering nothing
+			else:
+				pass
+	# do nothing if no item in Token
+	# reset Token to idle state
 	$Token.set_idle(true)
 
 # transfer the focused card to the player token
@@ -84,6 +87,7 @@ func _on_Token_hovered(object):
 			$Hand.determine_focus(hand_hover)
 	else:
 		hover.push_front(object)
+	print(hover)
 		
 
 func _on_Token_unhovered(object):
@@ -93,5 +97,5 @@ func _on_Token_unhovered(object):
 			$Hand.determine_focus(hand_hover)
 	else:
 		hover.erase(object)
-		
+	print(hover)	
 
