@@ -5,7 +5,7 @@
 [ext_resource path="res://scripts/player.gd" type="Script" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 80, 25 )
+extents = Vector2( 100, 30 )
 
 [node name="Player" type="Node2D"]
 script = ExtResource( 3 )
@@ -22,7 +22,7 @@ shape = SubResource( 1 )
 [node name="Token" parent="." instance=ExtResource( 2 )]
 position = Vector2( 0, -50 )
 
-[node name="Requests" type="Node2D" parent="."]
+[node name="Outbound" type="Node2D" parent="."]
 visible = false
 
 [connection signal="hovered" from="Token" to="." method="_on_Token_hovered"]

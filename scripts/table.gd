@@ -2,13 +2,16 @@ extends Node2D
 
 export var hand_size := 6
 var players := []
+var STACK = preload("res://Stack.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# yield until all players have been loaded into the scene (TEMP, players will eventually be added dynamically and connect through script
 	yield(get_tree().root, "ready")
 	players.append(get_node("Player"))
-	get_node("Player").connect("send_request", self, "process_send_request")
+	get_node("Player").connect("to_table", self, "process_to_table")
+	get_node("Player").connect("to_object", self, "process_to_object")
+	get_node("Player").connect("from_object", self, "process_from_object")
 	deal_cards(hand_size)
 
 
@@ -37,9 +40,21 @@ func transfer_card(to, from, card = null):
 
 # SIGNAL FUNCTIONS -------------------------------------
 
-# TEMP IMPLEMENTATION, proof of concept, player to table transfer
-func process_send_request(card):
-	$Player.remove_child(get_node("Player/Requests").get_child(0))
-	add_child(card)
-	card.position = get_global_mouse_position()
+# process a player request to move an object to the table
+func process_to_table(card, pos):
+	#there should be a TRY here // or be moved to a "send_card" func on player
+	$Player/Outbound.remove_child(card)
 	
+	var stack = STACK.instance()
+	add_child(stack)
+	stack.position = pos
+	stack.receive_card(card)
+
+func process_to_object(card, target):
+	#there should be a TRY here // or be moved to a "send_card" func on player
+	$Player/Outbound.remove_child(card)
+	target.receive_card(card)
+	
+func process_from_object(source, target):
+	var card = source.send_card()
+	target.receive_card(card)
