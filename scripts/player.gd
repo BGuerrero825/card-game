@@ -96,21 +96,24 @@ func receive_card(card):
 # SIGNAL FUNCTIONS -------------------------------------
 
 func _on_Token_hovered(object):
+	# cards in hand go to hand_hover
 	if object.get_parent() == $Hand:
 		hand_hover.push_front(object)
 		if $Token.idle:
 			$Hand.determine_focus(hand_hover)
 	# do not include cards in hover (they always belong to a parent node)
-	elif not "Card" in object.name and not "Hand" in object.name:
+	elif not "Card" in object.name:
 		hover.push_front(object)
 	print(hover)
 		
 
 func _on_Token_unhovered(object):
+	# cards in hand
 	if object.get_parent() == $Hand:
 		hand_hover.erase(object)
 		if $Token.idle:
 			$Hand.determine_focus(hand_hover)
+	# search and remove card from hover
 	else:
 		if hover.has(object):
 			hover.erase(object)

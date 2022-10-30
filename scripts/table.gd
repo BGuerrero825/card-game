@@ -57,4 +57,5 @@ func process_to_object(card, target):
 	
 func process_from_object(source, target):
 	var card = source.send_card()
-	target.receive_card(card)
+	if not card == null:
+		target.receive_card(card)

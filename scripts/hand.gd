@@ -61,6 +61,9 @@ func receive_card(card, index = null):
 	add_child(card)
 	position_cards()
 
+func send_card():
+	return null
+
 # return and remove currently focused card
 func send_focused_card():
 	var card = cards[focused]
